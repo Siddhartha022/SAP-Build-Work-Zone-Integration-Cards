@@ -1,0 +1,103 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.ObjectCard",
+    "type": "card",
+    "title": "Object Card",
+    "subTitle": "Employee Details",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://employee"
+    }
+  },
+  "sap.card": {
+    "type": "Object",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "data": {
+      "request": {
+        "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+        "method": "GET",
+        "parameters": {
+          "$filter": "ID eq 1003",
+          "$top": "1"
+        }
+      },
+      "path": "/value/0"
+    },
+    "header": {
+      "title": "{/value/0/name}",
+      "subTitle": "{/value/0/jobTitle}",
+      "icon": {
+        "src": "./image.png"
+      }
+    },
+    "content": {
+      "groups": [
+        {
+          "title": "Contact Details",
+          "items": [
+            {
+              "label": "Employee ID:",
+              "value": "{ID}"
+            },
+            {
+              "label": "Email:",
+              "value": "{email}",
+              "type": "email"
+            }
+          ]
+        },
+        {
+          "title": "Employment Details",
+          "items": [
+            {
+              "label": "Department:",
+              "value": "{department}"
+            },
+            {
+              "label": "Job Title:",
+              "value": "{jobTitle}"
+            },
+            {
+              "label": "Salary:",
+              "value": "{salary}"
+            },
+            {
+              "label": "Currency:",
+              "value": "{currency}"
+            },
+            {
+              "label": "Joining Date:",
+              "value": "{joiningDate}"
+            },
+            {
+              "label": "Status:",
+              "value": "{status}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

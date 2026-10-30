@@ -1,0 +1,83 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.NumericCard",
+    "type": "card",
+    "title": "Employee Leave Dashboard",
+    "subTitle": "Leave Request Status",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://calendar"
+    }
+  },
+  "sap.card": {
+    "type": "List",
+    "designtime": "dt/configuration",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      },
+      "parameters": {
+        "maxItems": {
+          "value": 10,
+          "type": "integer"
+        }
+      }
+    },
+    "header": {
+      "type": "Numeric",
+      "data": {
+        "request": {
+          "url": "{{destinations.myDestination}}/odata/v4/catalog/getTotalLeaveRequests()"
+        }
+      },
+      "title": "Total Leave Requests",
+      "mainIndicator": {
+        "number": "{total}",
+        "unit": "requests",
+        "state": "Good"
+      },
+      "details": "Total number of leave requests submitted"
+    },
+    "data": {
+      "request": {
+        "url": "{{destinations.myDestination}}/odata/v4/catalog/Leaves",
+        "parameters": {
+          "$top": "{parameters>/maxItems/value}",
+          "$select": "ID,employeeID,employeeName,startingDate,endingDate,noOfDays,reason,status,approver"
+        }
+      }
+    },
+    "content": {
+      "data": {
+        "path": "/value"
+      },
+      "maxItems": "{parameters>/maxItems/value}",
+      "item": {
+        "title": "{employeeName}",
+        "description": "Leave ID: {ID} | Days: {noOfDays} | {startingDate} to {endingDate}",
+        "info": {
+          "value": "{status}",
+          "state": "{= ${status} === 'Pending' ? 'Warning' : ${status} === 'Approved' ? 'Success' : 'Error' }"
+        }
+      }
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

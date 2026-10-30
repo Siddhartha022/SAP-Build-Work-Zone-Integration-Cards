@@ -1,0 +1,80 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.Highlightcard",
+    "type": "card",
+    "title": "BadgeBytes Employees",
+    "subTitle": "Employee Highlight Card",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://list"
+    }
+  },
+  "sap.card": {
+    "type": "List",
+    "designtime": "dt/configuration",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      },
+      "parameters": {
+        "maxItems": {
+          "value": 5,
+          "type": "integer"
+        }
+      }
+    },
+    "header": {
+      "title": "Employees Details",
+      "subTitle": "Highlight Card",
+      "icon": {
+        "src": "sap-icon://employee"
+      },
+      "status": {
+        "text": "Live Data"
+      }
+    },
+    "data": {
+      "request": {
+        "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+        "method": "GET",
+        "parameters": {
+          "$top": "{parameters>/maxItems/value}",
+          "$orderby": "ID asc"
+        }
+      }
+    },
+    "content": {
+      "data": {
+        "path": "/value"
+      },
+      "maxItems": "{parameters>/maxItems/value}",
+      "item": {
+        "title": "{name}",
+        "description": "{department} - {jobTitle}",
+        "highlight": "{= ${status} === 'Active' ? 'Success' : 'Error' }",
+        "info": {
+          "value": "{status}",
+          "state": "{= ${status} === 'Active' ? 'Success' : 'Error' }"
+        }
+      }
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

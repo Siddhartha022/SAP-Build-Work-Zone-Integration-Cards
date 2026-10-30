@@ -1,0 +1,71 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="ns.integrationdemo2.Card"
+    width="100%"
+    displayBlock="true">
+
+    <VBox class="sapUiSmallMargin">
+
+        <Toolbar>
+            <Title
+                text="Persons Data"
+                level="H3" />
+
+            <ToolbarSpacer />
+
+            <Button
+                icon="sap-icon://refresh"
+                tooltip="Refresh persons"
+                press="onRefreshPress" />
+        </Toolbar>
+
+        <BusyIndicator
+            visible="{northwind>/loading}" />
+
+        <MessageStrip
+            text="{northwind>/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${northwind>/error} }" />
+
+        <Table
+            id="personsTable"
+            items="{northwind>/persons}"
+            growing="true"
+            growingThreshold="20"
+            noDataText="No persons available">
+
+            <columns>
+                <Column>
+                    <Text text="Person ID" />
+                </Column>
+
+                <Column>
+                    <Text text="Person Name" />
+                </Column>
+
+                <Column hAlign="End">
+                    <Text text="Total Expense" />
+                </Column>
+
+                <Column hAlign="End">
+                    <Text text="Salary" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{northwind>ID}" />
+                        <Text text="{northwind>Name}" />
+                        <Text text="{northwind>TotalExpense}" />
+                        <Text text="{northwind>Salary}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+
+    </VBox>
+</mvc:View>

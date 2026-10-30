@@ -1,0 +1,81 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.AnalyticalCard",
+    "type": "card",
+    "title": "CAP Employee Analytics",
+    "subTitle": "Employee Count by Department",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://bar-chart"
+    }
+  },
+  "sap.card": {
+    "type": "Analytical",
+    "designtime": "dt/configuration",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "header": {
+      "title": "Employee Analytics",
+      "subTitle": "Employee Count by Department"
+    },
+    "content": {
+      "chartType": "column",
+      "title": {
+        "text": "Employees by Department",
+        "visible": true
+      },
+      "legend": {
+        "visible": false
+      },
+      "plotArea": {
+        "dataLabel": {
+          "visible": true
+        }
+      },
+      "measureAxis": "valueAxis",
+      "dimensionAxis": "categoryAxis",
+      "data": {
+        "request": {
+          "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+          "parameters": {
+            "$apply": "groupby((department),aggregate($count as employeeCount))"
+          }
+        },
+        "path": "/value"
+      },
+      "dimensions": [
+        {
+          "label": "Department",
+          "value": "{department}"
+        }
+      ],
+      "measures": [
+        {
+          "label": "Employee Count",
+          "value": "{employeeCount}"
+        }
+      ]
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

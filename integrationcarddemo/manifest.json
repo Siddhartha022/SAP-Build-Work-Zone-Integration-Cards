@@ -1,0 +1,102 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.integrationcarddemo",
+    "type": "card",
+    "title": "Employee Details",
+    "subTitle": "Employee List",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://employee"
+    }
+  },
+  "sap.card": {
+    "type": "Table",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      },
+      "filters": {
+				"searchQuery": {
+					"type": "Search",
+					"label": "Job Title",
+					"placeholder": "Enter Job Title"
+				}
+			},
+      "parameters": {
+        "maxItems": {
+          "value": 9,
+          "type": "integer"
+        }
+      }
+    },
+    "data": {
+      "request": {
+        "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+        
+        "parameters": {
+          "$top": "{parameters>/maxItems/value}",
+          "$filter": "contains(jobTitle, '{filters>/searchQuery/value}')",
+					"$count": true
+        }
+      },
+      "path": "/value"
+    },
+    "content": {
+      "data": {
+        "path": "/value"
+      },
+      "maxItems": "{parameters>/maxItems/value}",
+      "row": {
+        "columns": [
+          {
+            "title": "Employee ID",
+            "value": "{ID}",
+            "identifier": true
+          },
+          {
+            "title": "Employee Name",
+            "value": "{name}"
+          },
+          {
+            "title": "Email",
+            "value": "{email}"
+          },
+          {
+            "title": "Department",
+            "value": "{department}"
+          },
+          {
+            "title": "Job Title",
+            "value": "{jobTitle}"
+          },
+          {
+            "title": "Salary",
+            "value": "{salary}"
+          },
+          {
+            "title": "Status",
+            "value": "{status}"
+          }
+        ]
+      }
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

@@ -1,0 +1,78 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.MemberCard",
+    "type": "card",
+    "title": "BadgeBytes Team Members",
+    "subTitle": "Employee Directory",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://activity-individual"
+    }
+  },
+  "sap.card": {
+    "type": "Timeline",
+    "designtime": "dt/configuration",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "header": {
+      "title": "BadgeBytes Team Members",
+      "subTitle": "Employee Directory",
+      "icon": {
+        "src": "sap-icon://group"
+      }
+    },
+    "content": {
+      "data": {
+        "request": {
+          "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+          "method": "GET",
+          "parameters": {
+            "$orderby": "joiningDate desc"
+          }
+        },
+        "path": "/value"
+      },
+      "item": {
+        "dateTime": {
+          "value": "{joiningDate}"
+        },
+        "description": {
+          "value": "{department}"
+        },
+        "title": {
+          "value": "{jobTitle}"
+        },
+        "owner": {
+          "value": "{name}"
+        },
+        "ownerImage": {
+          "value": ""
+        },
+        "icon": {
+          "src": "sap-icon://employee"
+        }
+      }
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

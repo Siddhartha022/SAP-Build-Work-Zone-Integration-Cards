@@ -1,0 +1,94 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.leave.status.donut",
+    "type": "card",
+    "title": "Leave Status Donut Chart",
+    "subTitle": "Leave days grouped by status",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://pie-chart"
+    }
+  },
+  "sap.card": {
+    "type": "Analytical",
+    "designtime": "designtime/analytics",
+    "header": {
+      "title": "Leave Status",
+      
+      "icon": {
+        "src": "sap-icon://pie-chart"
+      }
+    },
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "content": {
+      "data": {
+        "request": {
+          "url": "{{destinations.myDestination}}/odata/v4/catalog/Leaves",
+          "method": "GET",
+          "parameters": {
+            "$select": "status,noOfDays",
+            "$orderby": "status"
+          }
+        },
+        "path": "/value"
+      },
+      "chartType": "Donut",
+      "legend": {
+        "visible": true,
+        "position": "Bottom"
+      },
+      "plotArea": {
+        "dataLabel": {
+          "visible": true,
+          "showTotal": true
+        }
+      },
+      "title": {
+        "text": "Leave Days by Status",
+        "visible": true
+      },
+      "dimensions": [
+        {
+          "label": "Leave Status",
+          "value": "{status}"
+        }
+      ],
+      "measures": [
+        {
+          "label": "Leave Days",
+          "value": "{noOfDays}"
+        }
+      ],
+      "feeds": [
+        {
+          "type": "Dimension",
+          "uid": "color",
+          "values": [
+            "Leave Status"
+          ]
+        },
+        {
+          "type": "Measure",
+          "uid": "size",
+          "values": [
+            "Leave Days"
+          ]
+        }
+      ]
+    }
+  }
+}

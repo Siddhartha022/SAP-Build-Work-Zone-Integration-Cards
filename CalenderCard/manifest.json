@@ -1,0 +1,74 @@
+
+{
+  "_version": "1.15.0",
+  "sap.app": {
+    "id": "ns.CalenderCard",
+    "type": "card",
+    "title": "BadgeBytes Holiday List",
+    "subTitle": "Company Holidays",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "phone": true,
+      "tablet": true
+    },
+    "icons": {
+      "icon": "sap-icon://calendar"
+    }
+  },
+  "sap.card": {
+    "type": "Calendar",
+    "designtime": "dt/configuration",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "data": {
+      "request": {
+        "url": "{{destinations.myDestination}}/odata/v4/catalog/HolidayList",
+        "method": "GET"
+      }
+    },
+    "header": {
+      "title": "BadgeBytes Holiday List",
+      "subTitle": "Company Holidays"
+    },
+    "content": {
+      "date": "2026-10-28",
+      "maxItems": 5,
+      "maxLegendItems": 0,
+      "noItemsText": "No holidays scheduled for this date",
+      "item": {
+        "template": {
+          "visualization": "appointment",
+          "startDate": "{holidayDate}",
+          "endDate": "{holidayDate}",
+          "title": "{holidayName}",
+          "text": "{region}",
+          "type": "Type13"
+        },
+        "path": "/value"
+      },
+      "specialDate": {
+        "template": {
+          "startDate": "{holidayDate}",
+          "endDate": "{holidayDate}",
+          "type": "Type13"
+        },
+        "path": "/value"
+      }
+    }
+  },
+  "sap.platform.mobilecards": {
+    "compatible": false
+  }
+}

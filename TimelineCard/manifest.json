@@ -1,0 +1,76 @@
+
+{
+  "_version": "1.91.4",
+  "$schema": "https://raw.githubusercontent.com/SAP/ui5-manifest/v1.91.4/schema.json",
+  "sap.app": {
+    "id": "ns.employeetimeline",
+    "type": "card",
+    "title": "BadgeBytes Employee Timeline",
+    "subTitle": "Employee Joining Activities",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "shortTitle": "Employee Timeline",
+    "info": "Employee joining history",
+    "description": "Displays employee joining dates and job details from the CAP service.",
+    "tags": {
+      "keywords": [
+        "Employee",
+        "Timeline",
+        "CAP",
+        "BadgeBytes"
+      ]
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://activity-items"
+    }
+  },
+  "sap.card": {
+    "type": "Timeline",
+    "configuration": {
+      "destinations": {
+        "myDestination": {
+          "name": "IntegrationCardTest",
+          "defaultUrl": "https://3aa116b5trial-dev-testforintegrationcard-srv.cfapps.us10-001.hana.ondemand.com"
+        }
+      }
+    },
+    "header": {
+      "title": "Employee Joining Timeline",
+      "subtitle": "Employee activities"
+    },
+    "content": {
+      "maxItems": 10,
+      "data": {
+        "request": {
+          "url": "{{destinations.myDestination}}/odata/v4/catalog/Employees",
+          "method": "GET",
+          "parameters": {
+            "$select": "ID,name,department,jobTitle,joiningDate,status",
+            "$orderby": "joiningDate desc",
+            "$top": "10"
+          }
+        },
+        "path": "/value"
+      },
+      "item": {
+        "dateTime": {
+          "value": "{joiningDate}"
+        },
+        "description": {
+          "value": "{department} - {jobTitle}"
+        },
+        "title": {
+          "value": "{name}"
+        },
+        "icon": {
+          "src": "sap-icon://employee"
+        },
+        "actions": []
+      }
+    }
+  }
+}

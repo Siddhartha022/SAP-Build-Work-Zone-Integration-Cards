@@ -1,0 +1,16 @@
+
+{
+  "version": "3.2.0",
+  "identification": {
+    "id": "ObjectCardRole",
+    "title": "Object Card",
+    "entityType": "role"
+  },
+  "payload": {
+    "apps": [
+      {
+        "id": "ns.ObjectCard"
+      }
+    ]
+  }
+}
